@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- FontAwesome (needed for hamburger icon) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Your CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_style.css') }}">
+
+    <title>Product Details</title>
+
+    <style>
+        body{
+            padding-top:90px; /* important for fixed navbar */
+            background-image: url("{{ url_for('static', filename='css/bg.png') }}");
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!-- COMMON FLASH MESSAGE BLOCK -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="app-flash-container">
+{% for category, message in messages %}
+<div class="app-flash {{ 'app-flash-' + category }}">
+{{ message }}
+</div>
+{% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+<script>
+setTimeout(function () {
+    const flashes = document.querySelectorAll(".app-flash");
+    flashes.forEach(function(flash){
+        flash.style.opacity = "0";
+        flash.style.transform = "translateY(-10px)";
+        setTimeout(() => flash.remove(), 400);
+    });
+}, 3000);
+</script>
+
+<!-- ===== SAME NAVBAR AS CART.HTML ===== -->
+
+<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+  <div class="container-fluid">
+
+    <a class="navbar-brand" href="/user/products">SmartCart</a>
+
+    <!-- Hamburger -->
+    <button class="navbar-toggler text-white border-0" type="button"
+        data-bs-toggle="collapse" data-bs-target="#userNavbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Menu -->
+    <div class="collapse navbar-collapse justify-content-end" id="userNavbar">
+        <ul class="navbar-nav align-items-lg-center">
+
+            <li class="nav-item">
+                <a href="/user/products" class="nav-link">View Products</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/user/cart" class="nav-link">Cart</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/user/profile" class="nav-link">My Profile</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/user-logout" class="nav-link logout">Logout</a>
+            </li>
+
+        </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== PAGE CONTENT (UNCHANGED) ===== -->
+
+<div class="container" style="margin-top:100px; margin-bottom:80px; max-width:1000px;">
+
+    <a href="/user/products" class="btn btn-outline-primary mb-4">
+        ← Back to Products
+    </a>
+
+    <div class="card shadow-lg border-0 rounded-4 product-details-card">
+        <div class="row g-0 align-items-center">
+
+            <div class="col-md-5 text-center p-4">
+                <img src="/static/uploads/product_images/{{ product.image }}"
+                     class="img-fluid rounded-3 product-detail-img">
+            </div>
+
+            <div class="col-md-7">
+                <div class="card-body p-4">
+
+                    <h2 class="fw-bold mb-3">{{ product.name }}</h2>
+
+                    <p class="text-muted mb-2">
+                        Category: <strong>{{ product.category }}</strong>
+                    </p>
+
+                    <h3 class="text-success fw-bold mb-3">
+                        ₹{{ product.price }}
+                    </h3>
+
+                    <hr>
+
+                    <h5 class="fw-semibold">Description</h5>
+
+                    <p class="text-secondary">
+                        {{ product.description }}
+                    </p>
+
+                    <!-- ADD TO CART BUTTON (UNCHANGED) -->
+                    <form action="/user/add-to-cart/{{ product.product_id }}" method="GET">
+                        <button class="btn btn-primary px-4 py-2">
+                            Add to Cart
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<footer class="footer">
+     © 2026 SmartCart Pvt. Ltd.
+Developed by Rudroju Sathwika
+All rights reserved. 
+
+</footer>
+
+<!-- Bootstrap JS (REQUIRED for hamburger to work) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

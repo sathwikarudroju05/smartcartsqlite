@@ -1,0 +1,426 @@
+/* ---------- GLOBAL RESET ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ---------- GLOBAL LAYOUT ---------- */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f6f9;
+    padding-top: 70px;
+    background-image: url(../css/bg.png);
+    background-size: cover;
+    background-attachment: fixed;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+/* Dark overlay */
+body::before{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:linear-gradient(to bottom right, rgba(30,41,59,0.65), rgba(15,23,42,0.85));
+    z-index:-1;
+}
+
+/* ---------- NAVBAR ---------- */
+.navbar-custom {
+    background-color: #1e293b;
+    padding: 12px 20px;
+}
+
+.navbar-custom .navbar-brand {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.navbar-custom .nav-link {
+    color: #e2e8f0;
+    margin-left: 15px;
+    transition: 0.3s ease;
+}
+
+.navbar-custom .nav-link:hover {
+    color: #38bdf8;
+}
+
+/* ---------- FOOTER ---------- */
+.footer {
+    background-color: #1e293b;
+    color: #cbd5e1;
+    text-align: center;
+    padding: 6px;
+    font-size: 14px;
+}
+
+/* ---------- PAGE CONTENT ---------- */
+.page-content {
+    flex: 1;
+    margin-top: 90px;
+    padding: 20px;
+}
+
+
+/* ---------- CARD STYLE ---------- */
+.card-box {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
+    backdrop-filter: blur(6px);
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+.card-box:hover {
+    transform: translateY(-3px);
+}
+
+/* ---------- DASHBOARD CARDS ---------- */
+.dashboard-card {
+    display: block;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
+    color: #212529;
+    text-decoration: none;
+    border:1px solid rgba(0,0,0,0.04);
+}
+
+.dashboard-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.15);
+}
+
+.dashboard-card h5 {
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+/* ---------- TABLE ---------- */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    background: #fff;
+    border-radius: 8px;
+    border: none;
+}
+
+table th {
+    background:#f1f5f9;
+    font-weight:600;
+}
+
+table tr {
+    transition: 0.2s ease;
+}
+
+table tr:hover {
+    background:#f8fafc;
+    transform:scale(1.002);
+}
+
+/* ---------- PRODUCT IMAGES ---------- */
+.product-thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    transition:0.2s ease;
+}
+
+.product-thumb:hover{
+    transform:scale(1.1);
+}
+
+.product-view-img {
+    max-height: 220px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+}
+
+/* ---------- BUTTON ---------- */
+.btn-primary {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-weight: 500;
+    transition: all 0.25s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(37,99,235,0.35);
+}
+
+/* ---------- FORM INPUT ---------- */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    transition: 0.25s ease;
+}
+
+.form-control:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 0.15rem rgba(37,99,235,0.15);
+}
+
+/* ============================================================
+   ADMIN PROFILE DESIGN
+============================================================ */
+
+.admin-profile-card {
+    max-width: 900px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 30px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 35px rgba(0,0,0,0.12);
+    align-items: center;
+    animation: fadeSlide 0.6s ease;
+    transition: 0.35s ease;
+}
+
+.admin-profile-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 50px rgba(0,0,0,0.18);
+}
+
+.profile-left {
+    text-align: center;
+    width: 35%;
+}
+
+.profile-right {
+    width: 65%;
+}
+
+.profile-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #0d6efd;
+    transition: 0.4s ease;
+}
+
+.profile-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(13,110,253,0.35);
+}
+
+.profile-info {
+    margin-top: 15px;
+    font-size: 15px;
+    color: #334155;
+}
+
+/* ---------- FLASH MESSAGE ---------- */
+.flash-container {
+    position: fixed;
+    top: 85px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+}
+
+.flash-message {
+    padding: 10px 20px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    animation: fadeIn 0.3s ease;
+}
+
+.flash-success {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.flash-danger {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* ---------- PRODUCT DETAILS ---------- */
+.product-details-card {
+    transition: 0.3s ease;
+    background: #ffffff;
+}
+
+.product-details-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.08);
+}
+
+.product-detail-img {
+    max-height: 320px;
+    object-fit: contain;
+}
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
+/* ============================================================
+   RESPONSIVE FIXES
+============================================================ */
+
+/* Tablet */
+@media (max-width: 768px) {
+
+    body {
+        background-attachment: scroll;
+    }
+
+    .admin-profile-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .profile-left,
+    .profile-right {
+        width: 100%;
+    }
+
+    .footer {
+        position: relative;
+    }
+
+    .product-detail-img {
+        max-height: 220px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+
+    .card-box {
+        padding: 18px;
+    }
+
+    .dashboard-card {
+        padding: 18px;
+    }
+
+    .profile-img {
+        width: 110px;
+        height: 110px;
+    }
+
+    .page-content {
+        padding: 15px;
+    }
+}
+
+/* Extra Small Phones */
+@media (max-width: 400px) {
+
+    .navbar-custom .navbar-brand {
+        font-size: 18px;
+    }
+
+    .profile-info {
+        font-size: 13px;
+    }
+
+    .btn-primary {
+        padding: 8px;
+        font-size: 14px;
+    }
+}
+
+
+
+
+/* ===============================
+   LOGIN & REGISTER STICKY FOOTER
+================================ */
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-page .container {
+    flex: 1;
+}
+
+
+
+
+/* ===============================
+   FIX SEARCH / FILTER MOBILE GAP
+================================ */
+
+@media (max-width: 768px) {
+
+    /* Add spacing between rows */
+    .row.mb-4 > div {
+        margin-bottom: 12px;
+    }
+
+    /* Make buttons full width on mobile */
+    .row.mb-4 .btn {
+        width: 100%;
+    }
+
+    /* Add spacing inside forms */
+    .row.mb-4 form {
+        gap: 8px;
+    }
+
+    /* Make filter dropdown full width */
+    .row.mb-4 .form-select {
+        width: 100%;
+    }
+
+    /* Add Product button spacing */
+    .row.mb-4 .col-md-2 {
+        text-align: left !important;
+    }
+}
+
+

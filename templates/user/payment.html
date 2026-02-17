@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Secure Payment</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body{
+            margin:0;
+            font-family:'Segoe UI',sans-serif;
+            background:linear-gradient(135deg,#eef2f7,#dfe9f3);
+        }
+
+        /* SPACE FOR FIXED NAVBAR + CENTER CONTENT */
+        .page-content{
+            padding-top:90px;
+            min-height:calc(100vh - 140px);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+        .payment-card{
+            width:100%;
+            max-width:460px;
+            background:#fff;
+            border-radius:14px;
+            padding:35px;
+            box-shadow:0 12px 35px rgba(0,0,0,0.12);
+            text-align:center;
+        }
+
+        .brand{
+            font-size:24px;
+            font-weight:700;
+            color:#2b5876;
+            margin-bottom:10px;
+        }
+
+        .subtitle{
+            color:#6c757d;
+            margin-bottom:25px;
+            font-size:14px;
+        }
+
+        .amount-box{
+            background:#f8f9fc;
+            border-radius:10px;
+            padding:18px;
+            margin-bottom:25px;
+        }
+
+        .amount-label{
+            font-size:13px;
+            color:#6c757d;
+        }
+
+        .amount{
+            font-size:28px;
+            font-weight:700;
+            color:#198754;
+        }
+
+        .pay-btn{
+            width:100%;
+            padding:14px;
+            font-size:16px;
+            border:none;
+            border-radius:8px;
+            background:linear-gradient(90deg,#2b5876,#4e4376);
+            color:#fff;
+            font-weight:600;
+            transition:0.3s;
+        }
+
+        .pay-btn:hover{
+            transform:translateY(-2px);
+            box-shadow:0 6px 18px rgba(0,0,0,0.18);
+        }
+
+        .secure-text{
+            margin-top:18px;
+            font-size:12px;
+            color:#6c757d;
+        }
+
+        /* PAGE SHOULD TAKE FULL HEIGHT */
+html, body{
+    height:100%;
+}
+
+/* FLEX LAYOUT TO PUSH FOOTER DOWN */
+body{
+    display:flex;
+    flex-direction:column;
+}
+
+/* MAIN CONTENT SHOULD EXPAND */
+.page-content{
+    flex:1;
+    padding-top:90px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* FIXED PROFESSIONAL FOOTER */
+.footer{
+    background:#1e293b;
+    color:#cbd5e1;
+    text-align:center;
+    padding:16px;
+    font-size:14px;
+}
+
+        @media(max-width:500px){
+            .payment-card{
+                margin:15px;
+                padding:25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ✅ NAVBAR (Correct Bootstrap Version) -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+
+    <a class="navbar-brand" href="/user/products">SmartCart</a>
+
+    <button class="navbar-toggler" type="button"
+        data-bs-toggle="collapse" data-bs-target="#userNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="userNavbar">
+        <ul class="navbar-nav">
+
+            <li class="nav-item">
+                <a href="/user/cart" class="nav-link">Cart</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/user/profile" class="nav-link">My Profile</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/user-logout" class="nav-link text-warning">Logout</a>
+            </li>
+
+        </ul>
+    </div>
+
+  </div>
+</nav>
+
+
+<!-- ✅ CENTERED PAYMENT CONTENT -->
+<div class="page-content">
+    <div class="payment-card">
+
+        <div class="brand">SmartCart</div>
+        <div class="subtitle">Secure Checkout</div>
+
+        <div class="amount-box">
+            <div class="amount-label">Total Amount</div>
+            <div class="amount">₹{{ amount }}</div>
+        </div>
+
+        <button id="rzp-button" class="pay-btn">
+            Pay Securely
+        </button>
+
+        <div class="secure-text">
+            🔒 100% Secure Payment powered by Razorpay
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Razorpay Checkout Script (UNCHANGED) -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+var options = {
+    "key": "{{ key_id }}",
+    "amount": "{{ amount * 100 }}",
+    "currency": "INR",
+    "name": "SmartCart",
+    "description": "Order Payment",
+    "order_id": "{{ order_id }}",
+
+    "handler": function (response){
+
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/verify-payment";
+
+        var fields = {
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_signature: response.razorpay_signature
+        };
+
+        for (var name in fields) {
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = name;
+            input.value = fields[name];
+            form.appendChild(input);
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+};
+
+var rzp = new Razorpay(options);
+
+document.getElementById('rzp-button').onclick = function(e){
+    rzp.open();
+    e.preventDefault();
+}
+</script>
+
+
+<!-- ✅ FOOTER -->
+<footer class="footer">
+    © 2026 SmartCart Pvt. Ltd.
+    Developed by Rudroju Sathwika
+    All rights reserved.
+</footer>
+
+
+<!-- Bootstrap JS (Required for menu toggle) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

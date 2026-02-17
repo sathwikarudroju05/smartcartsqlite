@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Your CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_style.css') }}">
+</head>
+
+<body>
+
+<!-- ✅ NAVBAR (Same as Admin) -->
+<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">SmartCart</a>
+  </div>
+</nav>
+
+<!-- ✅ PAGE CONTENT -->
+<div class="page-content">
+  <div class="container d-flex justify-content-center align-items-center">
+
+    <div class="card-box auth-card" style="max-width:420px; width:100%;">
+      <h3 class="text-center mb-4">User Login</h3>
+
+    <!-- COMMON FLASH MESSAGE BLOCK (Use in all pages) -->
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %} <div class="app-flash-container">
+{% for category, message in messages %} <div class="app-flash {{ 'app-flash-' + category }}">
+{{ message }} </div>
+{% endfor %} </div>
+{% endif %}
+{% endwith %}
+
+<script>
+/* Auto-hide flash after 3 seconds (works for all pages) */
+setTimeout(function () {
+    const flashes = document.querySelectorAll(".app-flash");
+    flashes.forEach(function(flash){
+        flash.style.opacity = "0";
+        flash.style.transform = "translateY(-10px)";
+        setTimeout(() => flash.remove(), 400);
+    });
+}, 3000);
+</script>
+
+
+      <form method="POST" action="/user-login">
+
+          <div class="mb-3">
+              <label>Email</label>
+              <input type="email" name="email" class="form-control" required>
+          </div>
+
+          <div class="mb-4">
+              <label>Password</label>
+              <input type="password" name="password" class="form-control" required>
+          </div>
+
+          <div class="d-grid">
+              <button type="submit" class="btn btn-primary">Login</button>
+          </div>
+      </form>
+
+      <div class="text-center mt-3">
+          <a href="/user-register">Don't have an account? Create Account</a><br>
+          <a href="/user-forgot">Forgot Password?</a><br>
+          
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ✅ FOOTER -->
+<footer class="footer">
+    © 2026 SmartCart Pvt. Ltd.
+Developed by Rudroju Sathwika
+All rights reserved. 
+
+</footer>
+
+
+</body>
+</html>

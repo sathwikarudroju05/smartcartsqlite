@@ -1,0 +1,898 @@
+/* ========== GLOBAL RESET ========== */
+
+
+
+
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    background-image: url("/static/css/bg.png");  /* ✅ FIXED */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding-top: 70px;
+    background-color: #eef2f7;   /* fallback */
+    min-height: 100vh;
+}
+
+/* ========== NAVBAR ========== */
+.navbar-custom {
+    background: linear-gradient(90deg, #2b5876, #4e4376);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+}
+
+.navbar-custom .navbar-brand {
+    color: #fff;
+    font-weight: 600;
+    font-size: 22px;
+}
+
+.navbar-custom .navbar-brand:hover {
+    color: #ffd369;
+}
+
+/* ========== MAIN CARD CONTAINER ========== */
+.main-container {
+    max-width: 1200px;
+    margin: auto;
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* ========== HEADINGS ========== */
+h2, h3 {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* ========== PRODUCT CARDS ========== */
+.product-card {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.35s ease;
+    background: #ffffff;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.product-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+}
+
+.product-card img {
+    height: 180px;
+    object-fit: cover;
+}
+
+.product-card .card-body {
+    text-align: center;
+}
+
+.product-card h5 {
+    font-weight: 600;
+    color: #34495e;
+}
+
+/* ========== BUTTON STYLE ========== */
+.btn-custom {
+    background: linear-gradient(90deg, #36d1dc, #5b86e5);
+    border: none;
+    color: #fff;
+    border-radius: 25px;
+    padding: 6px 18px;
+    transition: 0.3s ease;
+}
+
+.btn-custom:hover {
+    background: linear-gradient(90deg, #5b86e5, #36d1dc);
+    transform: scale(1.05);
+}
+
+/* ========== SEARCH BAR ========== */
+.search-box {
+    border-radius: 25px;
+    padding: 10px 18px;
+    border: 1px solid #dcdde1;
+}
+
+/* ========== FLASH MESSAGE (TOP CENTER) ========== */
+.flash-message {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 260px;
+    padding: 12px 22px;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 500;
+    z-index: 9999;
+    animation: fadeInOut 3s ease forwards;
+}
+
+/* Success = Green */
+.flash-success {
+    background: #2ecc71;
+}
+
+/* Error = Red */
+.flash-danger {
+    background: #e74c3c;
+}
+
+@keyframes fadeInOut {
+    0% {opacity:0; transform:translate(-50%,-10px);}
+    10% {opacity:1; transform:translate(-50%,0);}
+    80% {opacity:1;}
+    100% {opacity:0;}
+}
+
+/* ========== FOOTER ========== */
+.footer {
+    background: linear-gradient(90deg, #2b5876, #4e4376);
+    color: #fff;
+    text-align: center;
+    padding: 12px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* ========== EMPTY STATE DESIGN ========== */
+.empty-state {
+    text-align: center;
+    padding: 50px;
+    color: #7f8c8d;
+}
+
+.empty-state i {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width:768px){
+    .main-container {
+        padding:20px;
+    }
+
+    .product-card img {
+        height:140px;
+    }
+}
+
+
+/* PRODUCT DETAILS PAGE */
+
+.product-detail-card {
+border-radius: 18px;
+transition: all 0.4s ease;
+background: #ffffff;
+}
+
+.product-detail-card:hover {
+transform: translateY(-6px);
+box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+.product-img {
+max-height: 350px;
+object-fit: contain;
+transition: transform 0.4s ease;
+}
+
+.product-img:hover {
+transform: scale(1.05);
+}
+
+/* Back Button */
+.back-btn {
+border-radius: 25px;
+padding: 8px 18px;
+font-weight: 500;
+transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+background-color: #0d6efd;
+color: #fff;
+transform: translateX(-3px);
+}
+
+/* Smooth page load animation */
+.product-detail-card {
+animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+from {
+opacity: 0;
+transform: translateY(25px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+
+/* ===== PRODUCTS PAGE ===== */
+
+.products-section {
+    margin-top: 100px;
+    margin-bottom: 80px;
+}
+
+/* Title */
+.page-title {
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+/* Search Box */
+.search-filter-box {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.05);
+}
+
+/* Inputs */
+.custom-input {
+    border-radius: 8px;
+    padding: 10px;
+}
+
+/* Button */
+.custom-btn {
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Equal Card Size */
+.product-card {
+    width: 200px;
+    min-height: 300px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+    text-align: center;
+    background-color: #fff;
+    transition: 0.3s;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-card:hover {
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+    transform: translateY(-3px);
+}
+
+/* 🔥 FIXED IMAGE BOX (same for all images) */
+.product-card img {
+    width: 100%;
+    height: 140px;          /* Fixed space for image */
+    object-fit: contain;    /* Image fits without distortion */
+    background-color: #f8f9fa; /* gives clean background if image small */
+    border-radius: 6px;
+    padding: 5px;
+}
+
+/* Title fixed height so all cards align */
+.product-card h3 {
+    font-size: 16px;
+    margin: 8px 0;
+    height: 40px;
+    overflow: hidden;
+}
+
+/* Text */
+.product-card p {
+    margin: 2px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Button always aligned */
+.product-card a {
+    margin-top: auto;
+    background-color: #007bff;
+    padding: 8px 12px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.product-card a:hover {
+    background-color: #0056b3;
+}
+
+/* ✅ Responsive */
+@media (max-width: 768px) {
+    .product-card {
+        width: 48%;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-card {
+        width: 100%;
+    }
+}
+
+/* ===============================
+   PRODUCT CARD RESPONSIVE FIX
+   =============================== */
+
+/* Make cards equal height automatically */
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Stretch cards properly */
+.product-card {
+    width: 220px;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* pushes button to bottom */
+}
+
+/* Image area fixed — handles ANY image size */
+.product-card img {
+    width: 100%;
+    height: 140px;          /* fixed viewing area */
+    object-fit: contain;    /* keeps image ratio */
+    background: #f8fafc;    /* clean background if image small */
+    padding: 8px;
+}
+
+/* Product text grows naturally */
+.product-card h3 {
+    font-size: 17px;
+    min-height: 40px;       /* keeps alignment even for long names */
+}
+
+/* Price / category spacing */
+.product-card p {
+    margin-bottom: 6px;
+}
+
+/* Button always aligned */
+.product-card a {
+    margin-top: auto;
+    width: 100%;
+    text-align: center;
+    border-radius: 6px;
+}
+
+/* Hover feel like shopping site */
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+}
+
+/* ===============================
+   MOBILE OPTIMIZATION
+   =============================== */
+@media (max-width: 768px) {
+    .product-card {
+        width: 46%;   /* 2 cards per row */
+    }
+}
+
+@media (max-width: 480px) {
+    .product-card {
+        width: 100%;  /* 1 per row on small phones */
+    }
+}
+
+/* Flash message container */
+.app-flash-container{
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    width: 90%;
+    max-width: 520px;
+}
+
+/* Common flash style */
+.app-flash{
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    transition: all .4s ease;
+}
+
+/* Success (Green) */
+.app-flash-success{
+    background: #e6f4ea;
+    color: #1e7e34;
+    border-left: 5px solid #28a745;
+}
+
+/* Danger/Error (Red) */
+.app-flash-danger{
+    background: #fdecea;
+    color: #b02a37;
+    border-left: 5px solid #dc3545;
+}
+
+/* Optional: info */
+.app-flash-info{
+    background: #e7f3ff;
+    color: #084298;
+    border-left: 5px solid #0d6efd;
+}
+/* Allow page to stretch like real shopping sites */
+.product-page{
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+/* Make product area use full row */
+.product-container{
+    justify-content: flex-start;
+}
+
+/* Better wrapping when many products added */
+@media (min-width:1400px){
+    .product-page{
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+}
+
+/* Mobile spacing fix */
+@media (max-width:768px){
+    .product-page{
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+/* Prevent cards from looking stuck to center */
+.product-container::after{
+    content:"";
+    flex:auto;
+}
+/* ================= NAVBAR PROFESSIONAL BUTTON STYLE ================= */
+
+.navbar-custom {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* Right section container */
+.navbar-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+/* Button look */
+.nav-btn {
+    padding: 8px 18px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.08);
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.25s ease;
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+/* Hover effect */
+.nav-btn:hover {
+    background: #38bdf8;
+    color: #0f172a;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(56,189,248,0.35);
+}
+
+/* Active page */
+.nav-btn.active {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+}
+
+/* Logout special */
+.nav-btn.logout {
+    background: #ef4444;
+    color: white;
+    border: none;
+}
+
+.nav-btn.logout:hover {
+    background: #dc2626;
+}
+
+/* Mobile responsive */
+@media (max-width:768px){
+    .navbar-actions{
+        flex-wrap: wrap;
+        justify-content: center;
+        gap:8px;
+    }
+
+    .nav-btn{
+        padding:6px 12px;
+        font-size:13px;
+    }
+}
+
+
+/* ===== PROFESSIONAL NAVBAR ===== */
+
+.navbar-custom {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    padding: 14px 30px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Right Section */
+.nav-right {
+    display: flex;
+    gap: 12px;
+}
+
+/* Buttons */
+.nav-btn {
+    color: #e2e8f0;
+    background: rgba(255,255,255,0.06);
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-btn:hover {
+    background: #38bdf8;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Logout Special */
+.logout-btn {
+    background: rgba(239,68,68,0.15);
+}
+
+.logout-btn:hover {
+    background: #ef4444;
+}
+
+
+/* ===== PAYMENT BUTTON (NEW) ===== */
+
+.action-buttons{
+    display:flex;
+    gap:12px;
+}
+
+/* Green Razorpay Style Button */
+.pay-btn{
+    background:#28a745;
+    color:#fff;
+    padding:10px 22px;
+    border-radius:6px;
+    text-decoration:none;
+    font-weight:600;
+    transition:0.2s ease;
+    white-space:nowrap;
+}
+
+.pay-btn:hover{
+    background:#218838;
+    color:#fff;
+}
+
+/* ===== RESPONSIVE FIX ===== */
+@media(max-width:768px){
+
+    .action-buttons{
+        width:100%;
+        display:flex;
+        flex-direction:column;
+    }
+
+    .continue-btn,
+    .pay-btn{
+        width:100%;
+        text-align:center;
+    }
+}
+
+/* NAVBAR */
+.navbar-custom{
+    background: linear-gradient(90deg,#1e293b,#334155);
+    padding:14px 20px;
+}
+
+.navbar-custom .navbar-brand{
+    color:#fff;
+    font-weight:600;
+    font-size:20px;
+}
+
+.navbar-custom .nav-link{
+    color:#e5e7eb;
+    margin-left:18px;
+    font-weight:500;
+}
+
+.navbar-custom .nav-link:hover{
+    color:#fff;
+}
+
+.navbar-custom .logout{
+    color:#ff6b6b;
+}
+
+/* Mobile spacing */
+@media(max-width:991px){
+    .navbar-nav{
+        margin-top:10px;
+        gap:10px;
+    }
+}
+/* FIX: Back button should always be visible */
+.btn-outline-primary{
+    color:#0d6efd !important;
+    border:1px solid #0d6efd !important;
+    background-color:#ffffff !important;
+}
+
+.btn-outline-primary:hover{
+    color:#ffffff !important;
+    background-color:#0d6efd !important;
+}
+
+
+
+
+
+
+/* ===== NAVBAR ===== */
+.navbar-custom {
+    background-color: #0d1b2a;
+    padding: 14px 20px;
+}
+
+.navbar-custom .navbar-brand {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.navbar-custom .nav-link {
+    color: #ffffff;
+    margin-left: 20px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.navbar-custom .nav-link:hover {
+    color: #00b4d8;
+}
+/* ===== MOBILE MENU ===== */
+.navbar-toggler i {
+    font-size: 22px;
+    color: white;
+}
+body {
+    padding-top: 90px;
+}
+/* ===== FOOTER ===== */
+.footer {
+    background-color: #0d1b2a;
+    color: white;
+    padding: 15px 0;
+    margin-top: 40px;
+}
+.app-flash-container {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.app-flash {
+    padding: 12px 18px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 14px;
+    transition: opacity 0.4s ease;
+}
+
+.app-flash-success { background-color: #28a745; }
+.app-flash-danger { background-color: #dc3545; }
+.app-flash-warning { background-color: #ffc107; color: black; }
+
+
+/* ============================= */
+/* MOBILE RESPONSIVE FIX */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+    .container {
+        width: 95% !important;
+        margin-top: 15px;
+    }
+
+    .card {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    h2 {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    p {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+}
+.navbar-custom{
+    background-color:#0d6efd;
+}
+
+.navbar-custom .nav-link,
+.navbar-custom .navbar-brand{
+    color:#fff;
+}
+
+.navbar-custom .nav-link:hover{
+    color:#dfe9ff;
+}
+
+.navbar-toggler{
+    border:none;
+}
+
+.navbar-toggler-icon{
+    filter:invert(1);
+}
+
+
+/* ===== PAGE BACKGROUND ===== */
+body{
+    background: linear-gradient(135deg, #eef2f7, #dfe7f1);
+    min-height:100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== CENTER THE LOGIN BOX ===== */
+.page-content{
+    padding-top:120px;
+    padding-bottom:60px;
+    min-height:calc(100vh - 120px);
+}
+
+/* ===== AUTH CARD ===== */
+.auth-card{
+    background:#ffffff;
+    border-radius:14px;
+    padding:35px 30px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    transition:all .3s ease;
+    border:none;
+}
+
+/* Slight hover feel */
+.auth-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 16px 40px rgba(0,0,0,0.12);
+}
+
+/* ===== TITLE ===== */
+.auth-card h3{
+    font-weight:600;
+    color:#2c3e50;
+}
+
+/* ===== INPUT FIELDS ===== */
+.auth-card .form-control{
+    height:45px;
+    border-radius:8px;
+    border:1px solid #dcdfe6;
+    transition:.3s;
+}
+
+/* Focus Effect */
+.auth-card .form-control:focus{
+    border-color:#0d6efd;
+    box-shadow:0 0 0 0.15rem rgba(13,110,253,.15);
+}
+
+/* ===== LOGIN BUTTON ===== */
+.auth-card .btn-primary{
+    height:45px;
+    border-radius:8px;
+    font-weight:500;
+    background:linear-gradient(135deg,#0d6efd,#0b5ed7);
+    border:none;
+    transition:.3s;
+}
+
+/* Hover Animation */
+.auth-card .btn-primary:hover{
+    background:linear-gradient(135deg,#0b5ed7,#084298);
+    transform:scale(1.02);
+}
+
+/* ===== REGISTER LINK ===== */
+.auth-card a{
+    text-decoration:none;
+    font-size:14px;
+    color:#0d6efd;
+}
+
+.auth-card a:hover{
+    text-decoration:underline;
+}
+
+/* ===== FOOTER FIX ===== */
+.footer{
+    text-align:center;
+    padding:15px;
+    background:linear-gradient(90deg,#2c3e50,#4b6cb7);
+    color:#fff;
+}

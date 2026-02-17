@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <title>Your Cart</title>
+
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Your Main CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user_style.css') }}">
+
+<style>
+   body{
+    padding-top:90px;
+    padding-bottom:40px;
+    background:#f4f6f9;
+    background-image: url("{{ url_for('static', filename='css/bg.png') }}");
+    background-size: cover;        /* Make image cover full screen */
+    background-position: center;   /* Center the image */
+    background-repeat: no-repeat;  /* IMPORTANT — no repeating */
+    background-attachment: fixed;  /* Optional: keeps image stable */
+}
+
+
+    /* Make page stretch naturally */
+    .page-container{
+        min-height:80vh;
+    }
+
+    /* CART LIST */
+    .cart-wrapper{
+        display:flex;
+        flex-direction:column;
+        gap:16px;
+    }
+
+    /* Each Product Row (Corporate Style Like Amazon) */
+    .cart-card{
+        background:#fff;
+        border:1px solid #e5e7eb;
+        border-radius:8px;
+        padding:18px;
+        display:flex;
+        align-items:center;
+        gap:20px;
+        width:100%;
+    }
+
+    /* Image Box (fixed so all images look equal) */
+    .cart-img-box{
+        width:130px;
+        height:130px;
+        background:#fafafa;
+        border:1px solid #eee;
+        border-radius:6px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        flex-shrink:0;
+    }
+
+    .cart-img{
+        max-width:100%;
+        max-height:100%;
+        object-fit:contain;
+    }
+
+    /* Product Details */
+    .cart-details{
+        flex:1;
+    }
+
+    .product-name{
+        font-size:18px;
+        font-weight:600;
+        margin-bottom:5px;
+    }
+
+    .price{
+        color:#2e7d32;
+        font-weight:600;
+        margin-bottom:10px;
+    }
+
+    /* Quantity */
+    .qty-box{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        margin-bottom:8px;
+    }
+
+    .qty-btn{
+        width:32px;
+        height:32px;
+        border:1px solid #cfcfcf;
+        background:#fff;
+        text-align:center;
+        line-height:30px;
+        font-weight:bold;
+        text-decoration:none;
+        color:#000;
+        border-radius:4px;
+    }
+
+    .qty-btn:hover{
+        background:#f3f4f6;
+    }
+
+    .qty-number{
+        font-weight:600;
+        min-width:25px;
+        text-align:center;
+    }
+
+    .total{
+        font-size:14px;
+        color:#555;
+    }
+
+    /* Remove Button */
+    .remove-btn{
+        padding:8px 16px;
+        background:#212529;
+        color:#fff;
+        border-radius:6px;
+        text-decoration:none;
+        font-size:14px;
+        flex-shrink:0;
+    }
+
+    .remove-btn:hover{
+        background:#000;
+    }
+
+    /* GRAND TOTAL SECTION (Always at bottom — not floating) */
+    .summary-box{
+        margin-top:25px;
+        background:#fff;
+        border:1px solid #e5e7eb;
+        border-radius:8px;
+        padding:22px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        width:100%;
+    }
+
+    .grand-total{
+        font-size:20px;
+        font-weight:700;
+    }
+/* Title Card Style */
+.title-card{
+    width: fit-content;
+    margin: 0 auto 25px auto;
+    padding: 12px 28px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.title-card h2{
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    color: #2c3e50;
+}
+
+    .continue-btn{
+        background:#0d6efd;
+        color:#fff;
+        padding:10px 22px;
+        border-radius:6px;
+        text-decoration:none;
+        font-weight:500;
+    }
+    /* PROCEED TO PAY BUTTON (Green like e-commerce checkout) */
+.btn-checkout{
+    background:#198754;        /* Bootstrap success green */
+    color:#fff;
+    padding:10px 22px;
+    border-radius:6px;
+    text-decoration:none;
+    font-weight:500;
+    margin-left:10px;
+    display:inline-block;
+}
+
+.btn-checkout:hover{
+    background:#157347;        /* Darker green hover */
+    color:#fff;
+}
+
+
+    .continue-btn:hover{
+        background:#0b5ed7;
+    }
+
+    /* Responsive */
+    @media(max-width:768px){
+        .cart-card{
+            flex-direction:column;
+            align-items:flex-start;
+        }
+
+        .summary-box{
+            flex-direction:column;
+            align-items:flex-start;
+            gap:15px;
+        }
+        
+    }
+    .action-buttons{
+    display:flex;
+    gap:10px;
+}
+
+</style>
+
+
+</head>
+
+<body>
+  <!-- COMMON FLASH MESSAGE BLOCK (Use in all pages) -->
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %} <div class="app-flash-container">
+{% for category, message in messages %} <div class="app-flash {{ 'app-flash-' + category }}">
+{{ message }} </div>
+{% endfor %} </div>
+{% endif %}
+{% endwith %}
+
+<script>
+/* Auto-hide flash after 3 seconds (works for all pages) */
+setTimeout(function () {
+    const flashes = document.querySelectorAll(".app-flash");
+    flashes.forEach(function(flash){
+        flash.style.opacity = "0";
+        flash.style.transform = "translateY(-10px)";
+        setTimeout(() => flash.remove(), 400);
+    });
+}, 3000);
+</script>
+
+
+<!-- ===== NAVBAR ===== -->
+
+<!-- USER NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+  <div class="container-fluid">
+
+    <!-- BRAND -->
+    <a class="navbar-brand" href="/user/products">SmartCart</a>
+
+    <!-- HAMBURGER BUTTON -->
+    <button class="navbar-toggler text-white border-0" type="button"
+        data-bs-toggle="collapse" data-bs-target="#userNavbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- COLLAPSIBLE MENU -->
+    <div class="collapse navbar-collapse justify-content-end" id="userNavbar">
+
+        <ul class="navbar-nav align-items-lg-center">
+
+            <li class="nav-item">
+                <a href="/user/products" class="nav-link">View Products</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/user/cart" class="nav-link">Cart</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/user/profile" class="nav-link">My Profile</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/user-logout" class="nav-link logout">Logout</a>
+            </li>
+
+        </ul>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container page-container">
+
+<div class="title-card">
+    <h2>Your Cart</h2>
+</div>
+
+
+{% if not cart %}
+
+<div class="text-center p-5 bg-white border rounded">
+    <h4>Your cart is empty.</h4>
+    <a href="/user/products" class="btn btn-primary mt-3">Shop Now</a>
+</div>
+
+{% else %}
+
+<!-- PRODUCTS -->
+
+<div class="cart-wrapper">
+{% for pid, item in cart.items() %}
+
+<div class="cart-card">
+
+
+<div class="cart-img-box">
+    <img src="/static/uploads/product_images/{{ item.image }}" class="cart-img">
+</div>
+
+<div class="cart-details">
+    <div class="product-name">{{ item.name }}</div>
+    <div class="price">₹{{ item.price }}</div>
+
+    <div class="qty-box">
+        <a href="/user/cart/decrease/{{ pid }}" class="qty-btn">−</a>
+        <span class="qty-number">{{ item.quantity }}</span>
+        <a href="/user/cart/increase/{{ pid }}" class="qty-btn">+</a>
+    </div>
+
+    <div class="total">
+        Item Total: ₹{{ item.price * item.quantity }}
+    </div>
+</div>
+
+<a href="/user/cart/remove/{{ pid }}" class="remove-btn">Remove</a>
+
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<!-- GRAND TOTAL (ALWAYS DOWN ONLY) -->
+
+<div class="summary-box">
+    <div class="grand-total">Grand Total: ₹{{ grand_total }}</div>
+
+    <div class="action-buttons">
+        <a href="/user/products" class="continue-btn">Continue Shopping</a>
+
+        <!-- NEW BUTTON -->
+        <a href="/user/select-address" class="btn-checkout">Proceed to Pay</a>
+
+    </div>
+</div>
+
+
+{% endif %}
+
+</div>
+
+<footer class="footer">
+    © 2026 SmartCart Pvt. Ltd.
+Developed by Rudroju Sathwika
+All rights reserved. 
+
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
