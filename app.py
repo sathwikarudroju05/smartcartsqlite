@@ -13,6 +13,36 @@ import uuid
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 
+def verify_user_password(entered_password, stored_password):
+    """
+    Handles BOTH bcrypt and werkzeug hashed passwords.
+    This does NOT change your logic — only makes login compatible
+    with already stored database values.
+    """
+
+    if stored_password is None:
+        return False
+
+    # If stored as bytes (bcrypt format)
+    if isinstance(stored_password, bytes):
+        return bcrypt.check_password_hash(stored_password, entered_password)
+
+    # If stored as string (sometimes SQLite gives str for bcrypt)
+    if isinstance(stored_password, str) and stored_password.startswith("$2"):
+        return bcrypt.check_password_hash(stored_password.encode('utf-8'), entered_password)
+
+    # Otherwise assume werkzeug hash
+    try:
+        from werkzeug.security import check_password_hash
+        return check_password_hash(stored_password, entered_password)
+    except:
+        return False
+
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, "smartcart.db")
+
+
 
 
 
@@ -24,6 +54,23 @@ razorpay_client = razorpay.Client(
 
 app = Flask(__name__)
 app.secret_key = config.SECRET_KEY
+# ==========================================================
+# DEFAULT ROUTE (OPEN SITE → GO TO USER LOGIN)
+# ==========================================================
+@app.route('/')
+def default_home():
+
+    # If user already logged in → go to products page
+    if 'user_id' in session:
+        return redirect('/user/products')
+
+    # If admin logged in → go to admin dashboard
+    if 'admin_id' in session:
+        return redirect('/admin/item-list')
+
+    # Otherwise → show user login page
+    return redirect('/user-login')
+
 
 
 
@@ -51,8 +98,8 @@ mail = Mail(app)
 
 # ---------------- DB CONNECTION FUNCTION --------------
 def get_db_connection():
-    conn=sqlite3.connect("smartcart.db")
-    conn.row_factory=sqlite3.Row
+    conn = sqlite3.connect(DB_PATH)   # ✅ Use absolute path
+    conn.row_factory = sqlite3.Row
     return conn
 
 
@@ -130,7 +177,13 @@ def verify_otp_post():
         return redirect('/verify-otp')
 
     # Hash password using bcrypt
-    hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode('utf-8')
+    # hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode('utf-8')
+    hashed_password = bcrypt.hashpw(
+    password.encode('utf-8'),
+    bcrypt.gensalt()
+).decode('utf-8')
+
+
 
 
     # Insert admin into database
